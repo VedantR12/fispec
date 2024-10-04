@@ -1,0 +1,276 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body{
+  background-color: rgb(247, 177, 177);
+    height: 100%;
+    width: 100%;
+}
+
+#nav {
+    height: 45px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: start;
+    padding: 0px 5px;
+    background-color: rgb(241, 249, 255);
+  
+  }
+  
+  #logo {
+    font-size: 15px;
+    font-family: georgia;
+    letter-spacing: 0.5px;
+    font-weight: 80;
+    display: flex;
+    align-items: center;
+  }
+  
+  #logo a {
+    color: black;
+    text-decoration: none;
+  }
+  
+  #logo img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    border: 1px solid black;
+    margin-right: 10px;
+    margin-top: 2.5px;
+  }
+
+  .detail{
+    font-family: "Poppins", sans-serif;
+    box-shadow: 1px 1px 10px 1px gray;
+    border: 0.1px solid black;
+    border-radius: 20px;
+    background-color: white;
+    height: 340px;
+    width: 340px;
+    margin-top: 20PX;
+    margin-left: 8px;
+    img{
+        margin-top: 20px;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+    }
+    h2{
+        margin-left: 30px;
+        margin-top: 50%;
+    }
+  }
+
+  .det{
+        margin-left: 30px;
+        margin-top: 15px;
+        line-height: 30px;
+  }
+
+  .health{
+    font-family: "Poppins", sans-serif;
+    border-radius: 20px;
+    margin-left: 8px;
+    background-color: white;
+    width: 340px;
+    height: 330px;
+  }
+
+  .pos{
+    padding: 20px 0px;
+    margin-top: 20px;
+    margin-left: 30px;
+  }
+
+  .neg{
+    margin-top: 20px;
+    margin-left: 30px;
+  }
+
+  .wrapper {
+    font-family: "Poppins", sans-serif;
+    margin-top: 30px;
+    width: 340px;
+    margin-bottom: 60px;
+    
+  }
+  
+  .wrapper p {
+    margin-left: 20px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .head h1{
+    margin-top: 70px;
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+  }
+  
+  .accordion {
+    font-family: "Poppins", sans-serif;
+    background-color: white;
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 15px;
+    width: 340px;
+    margin-top: 10px;
+    height: 50px;
+    padding: 0px 30px;
+    transition: 0.4s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 300;
+    text-align: start;
+  }
+  
+  .accordion i {
+    font-size: 10px;
+  }
+  
+  
+  .pannel {
+    font-family: "Poppins", sans-serif;
+    width: 340px;
+    padding: 10px;
+    background-color: white;
+    overflow: hidden;
+    background-color: #f1f7f5;
+    display: none;
+  }
+  .pannel p {
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 1.2rem;
+    line-height: 1.4;
+  }
+  
+  .faq { 
+    margin: 10px 0;
+  }
+  
+  .nutriimg{
+    margin-top: 30px;
+    height: 330px;
+    width: 340px;
+  }
+
+  .nutriimg img{
+    height: 330px;
+  }
+
+  .ingri{
+    h2{
+      margin-bottom: 20px;
+    }
+    line-height: 30px;
+    letter-spacing: 1px;
+    padding: 30px;
+  }
+
+  .scroll{
+    margin-top: 330%;
+  }
+
+  .wrapper1 {
+    width: 340px;
+    margin-left: 8px;
+    margin-bottom: 60px;
+    
+  }
+  
+  .wrapper1 p {
+    margin-left: px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .accordion1 {
+    font-family: "Poppins", sans-serif;
+    background-color: white;
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 15px;
+    width: 340px;
+    margin-top: 10px;
+    height: 50px;
+    padding: 0px 30px;
+    transition: 0.4s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 300;
+    text-align: start;
+  }
+  
+  .accordion1 i {
+    font-size: 10px;
+  }
+  
+  
+  .pannel1 {
+    font-family: "Poppins", sans-serif;
+    width: 340px;
+    padding: 10px;
+    background-color: white;
+    overflow: hidden;
+    background-color: #f1f7f5;
+    display: none;
+  }
+  .pannel1 p {
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 1.2rem;
+    line-height: 1.4;
+  }
+  
+  .faq1 { 
+    margin: 10px 0;
+  }
+
+  .outro h1{
+    margin-left: 8px;
+    font-size: 20px;
+    text-shadow: 1px 1px 1px #000000;
+    border-radius: 25px;
+    text-align: start;
+    a{
+      color: black;
+      text-decoration: none;
+    }
+  }
+  
+  #tag-line{
+    width: 100%;
+    margin-left: 8px;
+    font-size: 15px;
+  }
+  
+  .foot{
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .foot a{
+    font-size: 15px;
+    margin-top: 10px;
+    margin-left: 8px;
+    display: block;
+    text-decoration: none;
+    color: black;
+  }
+  
+  .social{
+    height: 100px;
+    margin-left: 8px;
+    margin-top: 20px;
+  }
+  
+  .social i{
+    color: black;
+    padding: px 10px;
+  }

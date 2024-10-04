@@ -1,0 +1,156 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body{
+  background-color: lightgray;
+    height: 100%;
+    width: 100%;
+}
+    
+    #nav{
+    height: 45px;
+    display: flex;
+    width: 100vh;
+    align-items: center;
+    justify-content: start;
+    padding: 0px 5px;
+    background-color:  rgb(241, 249, 255);
+}
+  
+  #logo{
+    font-size: 15px;
+    font-family: georgia;
+    letter-spacing: 0.5px;
+    font-weight: 80;
+    display: flex;
+    align-items: center;
+  }
+  
+  #logo a{
+    color: black;
+    text-decoration: none;
+  }
+  
+  #logo img{
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    border: 1px solid black;
+    margin-right: 10px;
+    margin-top: 2.5px;
+  }
+
+  .team{
+    height: 100%;
+    width: 100%;
+    display: block;
+  }
+
+  
+  .vedant{
+    height: 50%;
+    width: 100%;
+    justify-content: center;
+    font-family: 'Poppins',sans-serif;
+  }
+
+  .container1{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%);
+    height: 500px;
+    width: 300px;
+    background: rgba(177, 177, 177, 0.3);
+  }
+  
+  .vedant img{
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    margin-bottom: 5%;
+    transform: translate(-50%);
+    height: 150px;
+    width: 150px;
+    border-radius: 5px;
+    padding: 2px;
+  }
+
+  .detail1{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%);
+    height: 300px;
+    width: 300px;
+    background-color: white;
+    h3{
+      position: absolute;
+      margin: 10px;
+      font-weight: 400;
+      letter-spacing: -0.5px;
+    }
+
+    h5{
+      position: absolute;
+      margin: 40px 10px;
+      font-weight: 300;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  .pragati{
+    height: 50%;
+    width: 100%;
+    justify-content: center;
+    font-family: 'Poppins',sans-serif;
+  }
+
+  .container2{
+    margin-top: 10px;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%);
+    height: 500px;
+    width: 300px;
+    background: rgba(177, 177, 177, 0.3);
+  }
+  
+  .pragati img{
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    margin-bottom: 5%;
+    transform: translate(-50%);
+    height: 150px;
+    width: 150px;
+    border-radius: 5px;
+    padding: 2px;
+  }
+
+  .detail2{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%);
+    height: 300px;
+    width: 300px;
+    background-color: white;
+    h3{
+      position: absolute;
+      margin: 10px;
+      font-weight: 400;
+      letter-spacing: -0.5px;
+    }
+
+    h5{
+      position: absolute;
+      margin: 40px 10px;
+      font-weight: 300;
+      letter-spacing: -0.5px;
+    }
+  }
