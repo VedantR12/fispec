@@ -80,97 +80,13 @@ body {
   width: 160px;
 }
 
-.item1 {
+.item {
   box-shadow: 1px 1px 7px 1px gray;
   background-color: white;
   border-radius: 10px;
   height: 200px;
   width: 100%;
-
-  img {
-    border: 0.5px solid black;
-    height: 75px;
-    width: 135px;
-    margin: 12px;
-    margin-bottom: 10px;
-  }
-}
-
-.item2 {
-  box-shadow: 1px 1px 7px 1px gray;
-  background-color: white;
-  border-radius: 10px;
-  height: 200px;
-  width: 100%;
-
-  img {
-    border: 0.5px solid black;
-    height: 75px;
-    width: 135px;
-    margin: 12px;
-    margin-bottom: 10px;
-  }
-}
-
-.item3 {
-  box-shadow: 1px 1px 7px 1px gray;
-  margin-top: 10px;
-  background-color: white;
-  border-radius: 10px;
-  height: 200px;
-  width: 100%;
-
-  img {
-    border: 0.5px solid black;
-    height: 75px;
-    width: 135px;
-    margin: 13px;
-    margin-bottom: 10px;
-  }
-}
-
-.item4 {
-  box-shadow: 1px 1px 7px 1px gray;
-  margin-top: 10px;
-  background-color: white;
-  border-radius: 10px;
-  height: 200px;
-  width: 100%;
-
-  img {
-    border: 0.5px solid black;
-    height: 75px;
-    width: 135px;
-    margin: 12px;
-    margin-bottom: 10px;
-  }
-}
-
-.item5 {
-  box-shadow: 1px 1px 7px 1px gray;
-  margin-top: 10px;
-  background-color: white;
-  border-radius: 10px;
-  height: 200px;
-  width: 100%;
-
-  img {
-    border: 0.5px solid black;
-    height: 75px;
-    width: 135px;
-    margin: 12px;
-    margin-bottom: 10px;
-  }
-}
-
-.item6 {
-  box-shadow: 1px 1px 7px 1px gray;
-  margin-top: 10px;
-  background-color: white;
-  border-radius: 10px;
-  height: 200px;
-  width: 100%;
-
+  margin-bottom: 10%;
   img {
     border: 0.5px solid black;
     height: 75px;
@@ -182,6 +98,7 @@ body {
 
 .name {
   margin: 12px;
+  font-family: 'Poppins', sans-serif;
 
   a {
     text-decoration: none;

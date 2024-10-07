@@ -8,12 +8,14 @@
     <link
             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             rel="stylesheet">
+            <script src="https://kit.fontawesome.com/6aab89d5f1.js" crossorigin="anonymous">
+  </script>
 </head>
 <body>
     <div id="nav">
         <div id="logo">
-          <a href="index.html"><img src="logo.png"></a>
-          <a href="index.html">
+          <a href="../../../index.html"><img src="logo.png"></a>
+          <a href="../../../index.html">
             <h1>FI-SPEC</h1>
           </a>
         </div>
@@ -23,5 +25,146 @@
             Frequently Asked question
         </h1>
     </div>
+    <div class="wrapper">
+
+      <div class="faq">
+        <button class="accordion">
+          What is FI-SPEC?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            It is a platfrom on which people can
+            verify the contents of packaged food products and purpose of them in it.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+          Do you cover all types of packaged food and bevrages?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            Yes. In FI-SPEC we aim to cover all of the packaged
+            food and bevrages in the market.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+          How can i search for a specific food product in FI-SPEC?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            You can search for a particular food product
+            by going to Categories>"Desired Category">"Desired Product".
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+          Is there any app available for mobile devices for easy access to user?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            No. There is no app launched by FI-SPEC, but we aim to
+            launch an app for it in the future.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+          Do you cover international products?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            No. For now FI-SPEC is only available for
+            Indian market and aiming to cover products
+            in the international market.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+          Can I trust claims like "natural" or "no artificial additives" on labels?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            No. You always have to check the back side of the
+            product for ingredients, but the ingredients list
+            is too small and people don't understand the chemical
+            names, for that you can use FI-SPEC for easy understanding
+            of the same.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+          Do you cover all types of packaged food and bevrages?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            Yes. In FI-SPEC we aim to cover all of the packaged
+            food and bevrages in the market.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <button class="accordion">
+          Do you cover all types of packaged food and bevrages?
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>
+            Yes. In FI-SPEC we aim to cover all of the packaged
+            food and bevrages in the market.
+          </p>
+        </div>
+      </div>
+    </div>
+    <script>var acc = document.getElementsByClassName("accordion");
+      var i;
+
+      for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          this.parentElement.classList.toggle("active");
+
+          var pannel = this.nextElementSibling;
+
+          if (pannel.style.display === "block") {
+            pannel.style.display = "none";
+          } else {
+            pannel.style.display = "block";
+          }
+        });
+      }
+    </script>
+
+   <div class="que">
+    <form>
+      <h3>
+        Feel free to ask question here
+      </h3>
+      <div class="que1">
+      <label for="question"></label>
+                <input type="text" placeholder="Questions here.." id="question">
+               <button><i class="fa-solid fa-paper-plane"></i></button>
+      </div>
+    </form>
+   </div>
 </body>
 </html>

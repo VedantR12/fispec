@@ -1,0 +1,96 @@
+<div class="wrapper">
+    <div class="faq">
+      <button class="accordion">
+        E223-Sodium Metabisulphite
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pannel">
+        <p>
+          <b>Sodium metabisulfite:</b> Sodium metabisulfite or sodium pyrosulfite -IUPAC spelling; Br. E.
+          sodium metabisulphite or sodium pyrosulphite- is an inorganic compound of chemical formula Na2S2O5.
+          The substance is sometimes referred to as disodium metabisulfite. It is used as a disinfectant, antioxidant,
+          and preservative agent.<br>
+          <i>Source:Wikipedia</i>
+        </p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="accordion">
+        E322-lecithins
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pannel">
+        <p>
+          Lecithins are natural compounds commonly used in the food industry as emulsifiers and stabilizers.<br><br>
+
+          Extracted from sources like soybeans and eggs, lecithins consist of phospholipids that enhance the mixing of
+          oil and
+          water, ensuring smooth textures in various products like chocolates, dressings, and baked goods.<br><br>
+
+          <b>They do not present any known health risks.</b>
+        </p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="accordion">
+        E471-Mono-and diglycerides of fatty acids
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pannel">
+        <p>
+          Mono- and diglycerides of fatty acids (E471), are food additives commonly used as emulsifiers in various
+          processed foods.<br><br>
+
+          These compounds consist of glycerol molecules linked to one or two fatty acid chains, which help stabilize and
+          blend water and
+          oil-based ingredients. E471 enhances the texture and shelf life of products like margarine, baked goods, and
+          ice cream, ensuring
+          a smooth and consistent texture.<br><br>
+
+          It is generally considered safe for consumption within established regulatory limits.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="accordion">
+        E500-Sodium carbonates
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pannel">
+        <p>
+          Sodium carbonates (E500) are compounds commonly used in food preparation as
+          leavening agents, helping baked goods rise by releasing carbon dioxide when
+          they interact with acids.<br><br>
+
+          Often found in baking soda, they regulate the pH of food, preventing it from
+          becoming too acidic or too alkaline. In the culinary world, sodium carbonates
+          can also enhance the texture and structure of foods, such as noodles, by modifying
+          the gluten network.<br><br>
+
+          Generally recognized as safe, sodium carbonates are non-toxic when consumed in typical amounts found in food.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq">
+      <button class="accordion">
+        E503-ammonium carbonates
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pannel">
+        <p>
+          Ammonium carbonate: Ammonium carbonate is a salt with the chemical formula -NH4-2CO3.
+          Since it readily degrades to gaseous ammonia and carbon dioxide upon heating, it is
+          used as a leavening agent and also as smelling salt. It is also known as baker's
+          ammonia and was a predecessor to the more modern leavening agents baking soda and baking powder.
+          It is a component of what was formerly known as sal volatile and salt of hartshorn.<br>
+          <i>Source:Wikipedia</i>
+        </p>
+      </div>
+    </div>
+
+  </div>
+  </div>

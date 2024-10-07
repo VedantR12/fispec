@@ -1,0 +1,54 @@
+ <div class="head">
+      <h1>What you need to know:</h1>
+    </div>
+    <div class="wrapper">
+
+
+      <div class="faq">
+        <button class="accordion">
+          Fats and Saturated fats
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="pannel">
+          <p>A high consumptions of fat, especially saturated fats, can raise cholestrol.<br>
+            <br>
+            The American Heart Association (AHA) recommends to achive less than 6% of total calorie intake.<br><br>
+            For Example, if one need 2000 cal/day no more than 13g of saturated fat should be consumed.<br><br>
+            <i>Source: American Heart Association (AHA)</i>
+          </p>
+        </div>
+      </div>
+
+      <div class="faq"></div>
+      <button class="accordion">
+        Sugars
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="pannel">
+        <p>
+          A high consumption of Sugar daily can spike glucose levels.<br>
+          <br>
+          Adults should have no more than 30g of Sugar a day(approx. 5-6 tsp).<br><br>
+          Children should have no more than 20-25g of SUgar a day(approx. 4-5 tsp).
+        </p>
+      </div>
+    </div>
+
+    <script>var acc = document.getElementsByClassName("accordion");
+      var i;
+
+      for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          this.parentElement.classList.toggle("active");
+
+          var pannel = this.nextElementSibling;
+
+          if (pannel.style.display === "block") {
+            pannel.style.display = "none";
+          } else {
+            pannel.style.display = "block";
+          }
+        });
+      }
+    </script>
