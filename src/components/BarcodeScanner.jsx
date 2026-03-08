@@ -13,62 +13,36 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
 
       try {
 
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: "environment" } },
+          audio: false
+        });
+
+        streamRef.current = stream;
+
+        const video = videoRef.current;
+        video.srcObject = stream;
+
         const reader = new BrowserMultiFormatReader();
         readerRef.current = reader;
 
-        const devices = await BrowserMultiFormatReader.listVideoInputDevices();
+        reader.decodeFromVideoElement(video, (result) => {
 
-        if (!devices.length) {
-          console.log("No camera found");
-          return;
-        }
+          if (result) {
 
-        let selectedCamera = devices[0].deviceId;
+            const code = result.getText();
 
-        // prefer back camera if possible
-        for (const device of devices) {
+            stopCamera();
 
-          const label = device.label.toLowerCase();
-
-          if (
-            label.includes("back") ||
-            label.includes("rear") ||
-            label.includes("environment")
-          ) {
-            selectedCamera = device.deviceId;
-            break;
-          }
-
-        }
-
-        reader.decodeFromVideoDevice(
-          selectedCamera,
-          videoRef.current,
-          (result) => {
-
-            if (result) {
-
-              const code = result.getText();
-
-              shutdownScanner();
-
-              onScanSuccess(code);
-
-            }
+            onScanSuccess(code);
 
           }
-        );
 
-        // capture stream for manual stop
-        setTimeout(() => {
-          if (videoRef.current) {
-            streamRef.current = videoRef.current.srcObject;
-          }
-        }, 300);
+        });
 
       } catch (err) {
 
-        console.log("Scanner error:", err);
+        console.error("Camera start error:", err);
 
       }
 
@@ -76,37 +50,54 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
 
     startScanner();
 
-    return () => {
-      shutdownScanner();
-    };
+    // cleanup when component unmounts
+    return () => stopCamera();
 
   }, []);
 
-  const shutdownScanner = () => {
+  const stopCamera = () => {
 
     try {
 
-      if (readerRef.current) {
-        readerRef.current.reset();
+      const video = videoRef.current;
+
+      // stop ZXing decoding if running
+      if (readerRef.current?.stopContinuousDecode) {
+        readerRef.current.stopContinuousDecode();
       }
 
+      readerRef.current = null;
+
+      // pause video
+      if (video) {
+        video.pause();
+      }
+
+      // stop camera stream tracks
       if (streamRef.current) {
 
-        const tracks = streamRef.current.getTracks();
-
-        tracks.forEach(track => track.stop());
+        streamRef.current.getTracks().forEach(track => track.stop());
 
         streamRef.current = null;
 
       }
 
-      if (videoRef.current) {
-        videoRef.current.srcObject = null;
+      // detach video
+      if (video) {
+        video.srcObject = null;
       }
 
     } catch (e) {
-      console.log("Scanner shutdown error:", e);
+
+      console.error("Camera stop error:", e);
+
     }
+
+  };
+
+  const shutdownScanner = () => {
+
+    stopCamera();
 
     closeScanner();
 
@@ -141,6 +132,7 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
           ref={videoRef}
           autoPlay
           playsInline
+          muted
           style={{
             width: "100%",
             borderRadius: "8px"
