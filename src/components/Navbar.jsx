@@ -5,6 +5,8 @@ import Sidebar from "./Sidebar";
 import BarcodeScanner from "./BarcodeScanner";
 import { Search, Camera } from "lucide-react";
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 function Navbar() {
 
   const { user } = useAuth();
