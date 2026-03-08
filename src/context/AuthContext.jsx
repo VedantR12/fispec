@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
-import {  onAuthStateChanged, signInWithEmailAndPassword,  createUserWithEmailAndPassword,  signOut} from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 
 const AuthContext = createContext();
 
@@ -21,8 +21,19 @@ export function AuthProvider({ children }) {
     return await signInWithEmailAndPassword(auth, email, password);
   };
 
-  const register = async (email, password) => {
-  return await createUserWithEmailAndPassword(auth, email, password);
+  const register = async (email, password, name) => {
+
+    const result = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    await updateProfile(result.user, {
+      displayName: name
+    });
+
+    return result;
   };
 
   const logout = async () => {

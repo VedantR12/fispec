@@ -1,47 +1,27 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import BarcodeScanner from "../components/BarcodeScanner";
+import Navbar from "../components/Navbar";
+import Hero from "../sections/Hero";
+import Team from "../sections/Team";
+import About from "../sections/About";
+import Contact from "../sections/Contact";
 
 function Home() {
-  const [query, setQuery] = useState("");
-  const [showScanner, setShowScanner] = useState(false);
-  const navigate = useNavigate();
-
-  const handleSearch = () => {
-    if (!query.trim()) return;
-    navigate(`/search/${encodeURIComponent(query.trim())}`);
-  };
-
-  const handleScanSuccess = (barcode) => {
-    setShowScanner(false);
-    navigate(`/search/${barcode}`);
-  };
 
   return (
+
     <div>
-      <h2>Search Product</h2>
 
-      <input
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Enter product name or barcode"
-      />
+      <Hero />
 
-      <button onClick={handleSearch}>
-        Search
-      </button>
+      <Team />
 
-      <hr />
+      <About />
 
-      <button onClick={() => setShowScanner(true)}>
-        Scan Barcode
-      </button>
+      <Contact />
 
-      {showScanner && (
-        <BarcodeScanner onScanSuccess={handleScanSuccess} />
-      )}
     </div>
+
   );
+
 }
 
 export default Home;
