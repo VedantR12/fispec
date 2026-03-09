@@ -1,66 +1,162 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
+import {
+  Box,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Stack
+} from "@mui/material";
 
 function Login() {
 
+  const navigate = useNavigate();
   const { login, register } = useAuth();
 
-  const [email,setEmail] = useState("");
-  const [password,setPassword] = useState("");
-  const [name,setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const handleLogin = async () => {
-    await login(email,password,name);
+
+    try {
+
+      await login(email, password);
+      navigate("/");
+
+    } catch (err) {
+
+      console.error(err);
+      alert(err.message);
+
+    }
+
   };
 
   const handleRegister = async () => {
-    await register(email,password,name);
+
+    try {
+
+      await register(email, password, name);
+      navigate("/");
+
+    } catch (err) {
+
+      console.error(err);
+      alert(err.message);
+
+    }
+
   };
 
   return (
 
-    <div style={{
-      height:"100vh",
-      display:"flex",
-      justifyContent:"center",
-      alignItems:"center"
-    }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: { xs: "flex-start", md: "center" },
+        pt: { xs: 15},
+        justifyContent: "center",
+        px: 2
+      }}
+    >
 
-      <div style={{
-        border:"1px solid #ccc",
-        padding:"40px",
-        width:"320px"
-      }}>
+      <Paper
+        elevation={0}
+        sx={{
+          width: "100%",
+          maxWidth: 420,
+          p: { xs: 3, sm: 4 },
+          borderRadius: 2,
+          border: "1px solid #686868",
+          background: "#212121"
+        }}
+      >
 
-        <h2>FiSpec Login</h2>
+        <Typography
+          variant="h4"
+          textAlign="center"
+          sx={{
+            mb: 4,
+            fontSize: {
+              xs: "1.8rem",
+              sm: "2.2rem"
+            }
+          }}
+        >
+          FISPEC Account
+        </Typography>
 
-        <input
-          placeholder="Name"
-          value={name}
-          onChange={(e)=>setName(e.target.value)}
-        />
 
-        <input
-          placeholder="Email"
-          value={email}
-          onChange={(e)=>setEmail(e.target.value)}
-        />
+        <Stack spacing={2}>
 
-        <input
-          placeholder="Password"
-          type="password"
-          value={password}
-          onChange={(e)=>setPassword(e.target.value)}
-        />
+          <TextField
+            label="Name"
+            variant="outlined"
+            fullWidth
+            size="small"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-        <button onClick={handleLogin}>Login</button>
+          <TextField
+            label="Email"
+            variant="outlined"
+            fullWidth
+            size="small"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <button onClick={handleRegister}>Register</button>
+          <TextField
+            label="Password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            size="small"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-      </div>
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={handleLogin}
+            sx={{
+              borderRadius: "30px",
+              textTransform: "none",
+              fontSize: "14px",
+              mt: 1
+            }}
+          >
+            Login
+          </Button>
 
-    </div>
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={handleRegister}
+            sx={{
+              borderRadius: "30px",
+              textTransform: "none",
+              fontSize: "14px"
+            }}
+          >
+            Register
+          </Button>
+
+        </Stack>
+
+      </Paper>
+
+    </Box>
+
   );
+
 }
 
 export default Login;

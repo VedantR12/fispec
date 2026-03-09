@@ -74,6 +74,9 @@ function Product() {
       <h3>Summary</h3>
 
       <p>{data.analysis.summary.one_line}</p>
+      <h3>Analysis:</h3>
+
+      <p>{data.analysis.summary.one_line}</p>
 
     </div>
 

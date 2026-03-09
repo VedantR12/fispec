@@ -1,9 +1,24 @@
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+
 import Sidebar from "./Sidebar";
 import BarcodeScanner from "./BarcodeScanner";
-import { Search, Camera } from "lucide-react";
+
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Avatar,
+  Paper,
+  TextField,
+  Box,
+  Stack
+} from "@mui/material";
+
+import SearchIcon from "@mui/icons-material/Search";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 
 const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
@@ -14,7 +29,6 @@ function Navbar() {
 
   const searchRef = useRef(null);
   const scannerRef = useRef(null);
-
   const navbarRef = useRef(null);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -31,8 +45,7 @@ function Navbar() {
 
   const initial = name.charAt(0).toUpperCase();
 
-
-  // SEARCH BUTTON CLICK
+  // SEARCH
   const handleSearch = () => {
 
     if (!query.trim()) return;
@@ -45,7 +58,7 @@ function Navbar() {
   };
 
 
-  // BARCODE SCAN SUCCESS
+  // BARCODE SUCCESS
   const handleScanSuccess = (barcode) => {
 
     setScannerOpen(false);
@@ -59,6 +72,12 @@ function Navbar() {
   const fetchSuggestions = async (value) => {
 
     setQuery(value);
+
+    // if input cleared, remove suggestions immediately
+    if (!value.trim()) {
+      setSuggestions([]);
+      return;
+    }
 
     if (value.length < 2) {
       setSuggestions([]);
@@ -89,13 +108,14 @@ function Navbar() {
 
     const handleClickOutside = (event) => {
 
-      // Ignore clicks inside navbar
       if (navbarRef.current && navbarRef.current.contains(event.target)) {
         return;
       }
 
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setSearchOpen(false);
+        setQuery("");
+        setSuggestions([]);
       }
 
       if (scannerRef.current && !scannerRef.current.contains(event.target)) {
@@ -119,118 +139,140 @@ function Navbar() {
 
       {/* NAVBAR */}
 
-      <nav ref={navbarRef}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "h6px 20px",
-          borderBottom: "1px solid #ddd"
+      <AppBar
+        position="sticky"
+        elevation={0}
+        sx={{
+          background: "#212121",
+          borderBottom: "1px solid #e5e7eb"
         }}
+        ref={navbarRef}
       >
 
-        {/* ACCOUNT */}
-
-        <div
-          onClick={() => setSidebarOpen(true)}
-          style={{
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            background: "#333",
-            color: "#fff",
+        <Toolbar
+          sx={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer"
+            justifyContent: "space-between"
           }}
         >
-          {initial}
-        </div>
 
+          {/* USER AVATAR */}
 
-        {/* BRAND */}
-
-        <h2 style={{ margin: 0 }}>FISPEC</h2>
-
-
-        {/* ACTIONS */}
-
-        <div style={{ display: "flex", gap: "20px" }}>
-
-          <Search
-            size={22}
-            style={{ cursor: "pointer" }}
-            onClick={(e) => {
-
-              e.stopPropagation();
-
-              setScannerOpen(false);
-              setSearchOpen((prev) => !prev);
-
+          <Avatar
+            sx={{
+              cursor: "pointer",
+              color: "white",
+              background: "purple"
             }}
-          />
+            onClick={() => setSidebarOpen(true)}
+          >
+            {initial}
+          </Avatar>
 
-          <Camera
-            size={22}
-            style={{ cursor: "pointer" }}
-            onClick={(e) => {
 
-              e.stopPropagation();
+          {/* BRAND */}
 
-              setSearchOpen(false);
-              setScannerOpen((prev) => !prev);
+          <Typography
+            variant="h6"
+            fontWeight={100}
+            sx={{ color: "#ffffff" }}
+          >
+            FISPEC
+          </Typography>
 
-            }}
-          />
 
-        </div>
+          {/* ACTION BUTTONS */}
 
-      </nav>
+          <Stack direction="row" spacing={1}>
 
+            <IconButton
+              onClick={(e) => {
+
+                e.stopPropagation();
+
+                setScannerOpen(false);
+
+                if (searchOpen) {
+                  setQuery("");
+                  setSuggestions([]);
+                }
+
+                setSearchOpen((prev) => !prev);
+
+              }}
+            >
+              <SearchIcon />
+            </IconButton>
+
+            <IconButton
+              id="navbar-scan-button"
+              onClick={(e) => {
+
+                e.stopPropagation();
+
+                setSearchOpen(false);
+                setScannerOpen((prev) => !prev);
+
+              }}
+            >
+              <CameraAltIcon />
+            </IconButton>
+
+          </Stack>
+
+        </Toolbar>
+
+      </AppBar>
 
 
       {/* SEARCH BAR */}
 
       {searchOpen && (
 
-        <div
+        <Box
           ref={searchRef}
-          style={{
-            padding: "10px",
-            borderBottom: "1px solid #ddd",
-            position: "relative"
+          sx={{
+            p: 2,
           }}
         >
 
-          <input
-            value={query}
-            onChange={(e) => fetchSuggestions(e.target.value)}
-            placeholder="Search product..."
-            style={{
-              width: "100%",
-              padding: "8px"
+          <Paper
+            elevation={0}
+            sx={{
+              p: 1,
+              border: "1px solid #e5e5e5"
             }}
-          />
+          >
+
+            <TextField
+              fullWidth
+              placeholder="Search product..."
+              value={query}
+              onChange={(e) => fetchSuggestions(e.target.value)}
+              variant="standard"
+              InputProps={{
+                disableUnderline: true
+              }}
+            />
+
+          </Paper>
 
 
           {/* SUGGESTIONS */}
 
-          {suggestions.length > 0 && (
+          {query && suggestions.length > 0 && (
 
-            <div
-              style={{
-                border: "1px solid #ddd",
-                background: "#fff",
-                marginTop: "5px",
-                maxHeight: "300px",
+            <Paper
+              sx={{
+                mt: 1,
+                maxHeight: 300,
                 overflowY: "auto"
               }}
             >
 
               {suggestions.map((item) => (
 
-                <div
+                <Box
                   key={item.barcode}
                   onClick={() => {
 
@@ -240,12 +282,15 @@ function Navbar() {
                     setSearchOpen(false);
 
                   }}
-                  style={{
+                  sx={{
                     display: "flex",
                     alignItems: "center",
-                    padding: "8px",
+                    p: 1.5,
                     cursor: "pointer",
-                    borderBottom: "1px solid #eee"
+                    borderBottom: "1px solid #474747",
+                    "&:hover": {
+                      background: "#414141"
+                    }
                   }}
                 >
 
@@ -253,45 +298,36 @@ function Navbar() {
                     src={item.image || "https://via.placeholder.com/40"}
                     alt={item.product_name}
                     style={{
-                      width: "40px",
-                      height: "40px",
+                      width: 40,
+                      height: 40,
                       objectFit: "cover",
-                      marginRight: "10px"
+                      marginRight: 10
                     }}
                   />
 
-                  <div>
+                  <Box>
 
-                    <div style={{ fontWeight: "bold" }}>
+                    <Typography fontWeight={600}>
                       {item.product_name}
-                    </div>
+                    </Typography>
 
-                    <div style={{ fontSize: "12px", color: "#666" }}>
+                    <Typography variant="caption" color="text.secondary">
                       {item.brand || "Unknown Brand"}
-                    </div>
+                    </Typography>
 
-                  </div>
+                  </Box>
 
-                </div>
+                </Box>
 
               ))}
 
-            </div>
+            </Paper>
 
           )}
 
-
-          <button
-            onClick={handleSearch}
-            style={{ marginTop: "5px" }}
-          >
-            Search
-          </button>
-
-        </div>
+        </Box>
 
       )}
-
 
 
       {/* SIDEBAR */}
@@ -301,13 +337,13 @@ function Navbar() {
       )}
 
 
-
       {/* BARCODE SCANNER */}
 
       {scannerOpen && (
         <div ref={scannerRef}>
-          <BarcodeScanner onScanSuccess={handleScanSuccess} 
-          closeScanner={() => setScannerOpen(false)}
+          <BarcodeScanner
+            onScanSuccess={handleScanSuccess}
+            closeScanner={() => setScannerOpen(false)}
           />
         </div>
       )}

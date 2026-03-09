@@ -13,8 +13,38 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
 
       try {
 
+        // Step 1: request any rear camera first (to unlock device labels)
+        await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "environment" }
+        });
+
+        // Step 2: list all cameras
+        const devices = await navigator.mediaDevices.enumerateDevices();
+
+        const videoDevices = devices.filter(
+          d => d.kind === "videoinput"
+        );
+
+        // Step 3: keep only rear cameras
+        const rearCameras = videoDevices.filter(device =>
+          device.label.toLowerCase().includes("back") ||
+          device.label.toLowerCase().includes("rear") ||
+          device.label.toLowerCase().includes("environment")
+        );
+
+        let selectedDeviceId;
+
+        if (rearCameras.length > 0) {
+          // choose the last rear camera (usually main lens)
+          selectedDeviceId = rearCameras[rearCameras.length - 1].deviceId;
+        } else {
+          selectedDeviceId = videoDevices[0]?.deviceId;
+        }
+
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: { ideal: "environment" } },
+          video: {
+            deviceId: { exact: selectedDeviceId }
+          },
           audio: false
         });
 
@@ -50,7 +80,6 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
 
     startScanner();
 
-    // cleanup when component unmounts
     return () => stopCamera();
 
   }, []);
@@ -61,19 +90,16 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
 
       const video = videoRef.current;
 
-      // stop ZXing decoding if running
       if (readerRef.current?.stopContinuousDecode) {
         readerRef.current.stopContinuousDecode();
       }
 
       readerRef.current = null;
 
-      // pause video
       if (video) {
         video.pause();
       }
 
-      // stop camera stream tracks
       if (streamRef.current) {
 
         streamRef.current.getTracks().forEach(track => track.stop());
@@ -82,7 +108,6 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
 
       }
 
-      // detach video
       if (video) {
         video.srcObject = null;
       }
