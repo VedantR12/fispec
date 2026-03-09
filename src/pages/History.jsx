@@ -197,7 +197,7 @@ function History() {
 
             <Typography
               sx={{
-                fontWeight: 600,
+                fontWeight: 100,
                 mb: 0.5,
                 overflow: "hidden",
                 textOverflow: "ellipsis",
@@ -205,7 +205,8 @@ function History() {
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: "vertical",
                 lineHeight: 1.4,
-                minHeight: "2.8em"
+                minHeight: "2em",
+                fontSize: "1rem"
               }}
             >
               {item.product_name}
@@ -217,6 +218,9 @@ function History() {
             <Typography
               variant="body2"
               color="text.secondary"
+              sx={{
+                fontSize: "0.9rem"
+              }}
             >
               {item.brand || "Unknown Brand"}
             </Typography>
