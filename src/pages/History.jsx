@@ -3,6 +3,14 @@ import { useAuth } from "../context/AuthContext";
 import { fetchWithAuth } from "../api/client";
 import { useNavigate } from "react-router-dom";
 
+import {
+  Container,
+  Typography,
+  Box,
+  Paper,
+  CircularProgress
+} from "@mui/material";
+
 function History() {
 
   const { user } = useAuth();
@@ -20,7 +28,6 @@ function History() {
       try {
 
         const token = await user.getIdToken();
-
         const result = await fetchWithAuth("/history", token);
 
         setHistory(result.history || []);
@@ -42,98 +49,185 @@ function History() {
   }, [user]);
 
 
-  if (!user) return <p>Please login first.</p>;
-
-  if (loading) return <p>Loading history...</p>;
-
-  if (history.length === 0) return <p>No history yet.</p>;
-
-
   function getScoreColor(score) {
 
-    if (score >= 7) return "#2ecc71";   // green
-    if (score >= 4) return "#f1c40f";   // yellow
-    return "#e74c3c";                   // red
+    if (score >= 7) return "#2ecc71";
+    if (score >= 4) return "#f1c40f";
+    return "#e74c3c";
 
   }
 
+
+  if (!user) {
+    return (
+      <Container maxWidth="lg">
+        <Typography sx={{ mt: 6 }}>
+          Please login first.
+        </Typography>
+      </Container>
+    );
+  }
+
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: 10
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+
+  if (history.length === 0) {
+    return (
+      <Container maxWidth="lg">
+        <Typography sx={{ mt: 6 }}>
+          No history yet.
+        </Typography>
+      </Container>
+    );
+  }
+
+
   return (
 
-    <div style={{ padding: "20px" }}>
+    <Container maxWidth="xl" sx={{ pt: 6 }}>
 
-      <h2>Your Search History</h2>
-  
-      {history.map((item) => (
+      <Typography
+        variant="h4"
+        sx={{
+          mb: 5,
+          fontSize: {
+            xs: "2rem",
+            sm: "2.4rem",
+            md: "3rem"
+          }
+        }}
+      >
+        Your Scan History
+      </Typography>
 
-        <div
-          key={item.barcode}
-          onClick={() => navigate(`/product/${item.barcode}`)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "15px",
-            border: "1px solid #ddd",
-            padding: "12px",
-            marginBottom: "12px",
-            cursor: "pointer",
-            borderRadius: "6px",
-            position: "relative"
-          }}
-        >
 
-          {/* SCORE BADGE */}
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+          justifyContent: "flex-start",
+          gap: 1
+        }}
+      >
 
-          <div
-            style={{
-              position: "absolute",
-              top: "8px",
-              right: "10px",
-              background: getScoreColor(item.score),
-              color: "white",
-              padding: "5px 10px",
-              borderRadius: "6px",
-              fontWeight: "bold",
-              fontSize: "14px"
+        {history.map((item) => (
+
+          <Paper
+            key={item.barcode}
+            elevation={0}
+            onClick={() => navigate(`/product/${item.barcode}`)}
+            sx={{
+              p: 3,
+              borderRadius: 2,
+              border: "1px solid #686868",
+              cursor: "pointer",
+              position: "relative",
+              transition: "0.25s",
+              background: "#212121",
+              width: 150,
+              "&:hover": {
+                transform: "translateY(-4px)",
+                borderColor: "#cbd5f5"
+              }
             }}
           >
-            {item.score}
-          </div>
+
+            {/* SCORE BADGE */}
+
+            <Box
+              sx={{
+                position: "absolute",
+                top: 12,
+                right: 12,
+                background: getScoreColor(item.score),
+                color: "#fff",
+                px: 1.5,
+                py: 0.5,
+                borderRadius: 1,
+                fontSize: "0.8rem",
+                fontWeight: 600
+              }}
+            >
+              {item.score}
+            </Box>
 
 
-          {/* PRODUCT IMAGE */}
+            {/* IMAGE FRAME */}
 
-          <img
-            src={item.image}
-            alt={item.product_name}
-            style={{
-              width: "70px",
-              height: "70px",
-              objectFit: "contain",
-              border: "1px solid #eee",
-              borderRadius: "4px"
-            }}
-          />
+            <Box
+              sx={{
+                width: 100,
+                height: 100,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "#1a1a1a",
+                borderRadius: 1,
+                mb: 2,
+                overflow: "hidden"
+              }}
+            >
+              <Box
+                component="img"
+                src={item.image}
+                alt={item.product_name}
+                sx={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  objectFit: "contain"
+                }}
+              />
+            </Box>
 
 
-          {/* PRODUCT TEXT */}
+            {/* PRODUCT NAME */}
 
-          <div>
-
-            <h3 style={{ margin: 0 }}>
+            <Typography
+              sx={{
+                fontWeight: 600,
+                mb: 0.5,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                lineHeight: 1.4,
+                minHeight: "2.8em"
+              }}
+            >
               {item.product_name}
-            </h3>
+            </Typography>
 
-            <p style={{ margin: "4px 0", color: "#555" }}>
-              Brand: {item.brand || "Unknown"}
-            </p>
 
-          </div>
+            {/* BRAND */}
 
-        </div>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+            >
+              {item.brand || "Unknown Brand"}
+            </Typography>
 
-      ))}
+          </Paper>
 
-    </div>
+        ))}
+
+      </Box>
+
+    </Container>
 
   );
 
