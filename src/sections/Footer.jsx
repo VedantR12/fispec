@@ -10,15 +10,15 @@ function Footer() {
   const socials = [
     {
       icon: <GitHubIcon />,
-      link: "https://github.com/"
+      link: "https://github.com/VedantR12"
     },
     {
       icon: <InstagramIcon />,
-      link: "https://instagram.com/"
+      link: "https://instagram.com/fi_spec"
     },
     {
       icon: <LinkedInIcon />,
-      link: "https://linkedin.com/"
+      link: "https://linkedin.com/in/vedant-rode-13615a239"
     },
     {
       icon: <EmailIcon />,

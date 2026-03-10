@@ -1,22 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-
 import Sidebar from "./Sidebar";
 import BarcodeScanner from "./BarcodeScanner";
-
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Avatar,
-  Paper,
-  TextField,
-  Box,
-  Stack
-} from "@mui/material";
-
+import { AppBar, Toolbar, Typography, IconButton, Avatar, Paper, TextField, Box, Stack, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 
@@ -249,9 +236,24 @@ function Navbar() {
               placeholder="Search product..."
               value={query}
               onChange={(e) => fetchSuggestions(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSearch();
+                }
+              }}
               variant="standard"
               InputProps={{
-                disableUnderline: true
+                disableUnderline: true,
+                endAdornment: query.trim() ? (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleSearch}
+                      size="small"
+                    >
+                      <SearchIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ) : null
               }}
             />
 
