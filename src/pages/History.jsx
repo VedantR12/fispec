@@ -2,239 +2,178 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { fetchWithAuth } from "../api/client";
 import { useNavigate } from "react-router-dom";
+import { Container, Typography, Box, CircularProgress } from "@mui/material";
 
-import {
-  Container,
-  Typography,
-  Box,
-  Paper,
-  CircularProgress
-} from "@mui/material";
+function getScoreColor(score) {
+  if (score >= 7) return "var(--score-good)";
+  if (score >= 4) return "var(--score-mid)";
+  return "var(--score-bad)";
+}
+
+function getScoreBgColor(score) {
+  if (score >= 7) return "rgba(74,222,128,0.12)";
+  if (score >= 4) return "rgba(251,191,36,0.12)";
+  return "rgba(248,113,113,0.12)";
+}
 
 function History() {
-
-  const { user } = useAuth();
-  const navigate = useNavigate();
-
+  const { user }   = useAuth();
+  const navigate   = useNavigate();
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     const loadHistory = async () => {
-
       if (!user) return;
-
       try {
-
-        const token = await user.getIdToken();
+        const token  = await user.getIdToken();
         const result = await fetchWithAuth("/history", token);
-
         setHistory(result.history || []);
-
       } catch (err) {
-
         console.error(err);
-
       } finally {
-
         setLoading(false);
-
       }
-
     };
-
     loadHistory();
-
   }, [user]);
 
+  if (!user) return (
+    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "60vh" }}>
+      <Typography sx={{ color: "var(--text-secondary)", fontFamily: "var(--font-body)" }}>Please login first.</Typography>
+    </Box>
+  );
 
-  function getScoreColor(score) {
+  if (loading) return (
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh", gap: 2 }}>
+      <CircularProgress size={32} thickness={3} />
+      <Typography sx={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--text-tertiary)", letterSpacing: "0.08em" }}>
+        Loading history...
+      </Typography>
+    </Box>
+  );
 
-    if (score >= 7) return "#2ecc71";
-    if (score >= 4) return "#f1c40f";
-    return "#e74c3c";
-
-  }
-
-
-  if (!user) {
-    return (
-      <Container maxWidth="lg">
-        <Typography sx={{ mt: 6 }}>
-          Please login first.
-        </Typography>
-      </Container>
-    );
-  }
-
-
-  if (loading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          mt: 10
-        }}
-      >
-        <CircularProgress />
+  if (history.length === 0) return (
+    <Container maxWidth="lg" sx={{ pt: 8, textAlign: "center" }}>
+      <Box sx={{
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+        width: 64, height: 64, borderRadius: "var(--radius-lg)",
+        background: "var(--bg-card)", border: "1px solid var(--border-default)",
+        mb: 3, fontSize: "1.8rem"
+      }}>
+        🕐
       </Box>
-    );
-  }
-
-
-  if (history.length === 0) {
-    return (
-      <Container maxWidth="lg">
-        <Typography sx={{ mt: 6 }}>
-          No history yet.
-        </Typography>
-      </Container>
-    );
-  }
-
+      <Typography sx={{ fontFamily: "var(--font-display)", fontSize: "2rem", color: "var(--text-secondary)", mb: 1 }}>
+        No history yet
+      </Typography>
+      <Typography sx={{ fontFamily: "var(--font-body)", fontSize: "0.9rem", color: "var(--text-tertiary)" }}>
+        Scan a product to get started
+      </Typography>
+    </Container>
+  );
 
   return (
+    <Container maxWidth="xl" sx={{ pt: 6, pb: 8, px: { xs: 2, sm: 3 } }}>
 
-    <Container maxWidth="xl" sx={{ pt: 6 }}>
+      {/* Header */}
+      <Box sx={{ mb: 6, animation: "fadeUp 0.4s var(--ease-out)" }}>
+        <Typography sx={{
+          fontFamily: "var(--font-mono)", fontSize: "0.7rem",
+          color: "var(--accent)", letterSpacing: "0.1em", mb: 1.5,
+          display: "flex", alignItems: "center", gap: 1
+        }}>
+          <Box sx={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
+          {history.length} SCAN{history.length !== 1 ? "S" : ""}
+        </Typography>
+        <Typography variant="h3" sx={{ fontSize: { xs: "1.8rem", sm: "2.4rem", md: "3rem" } }}>
+          Your Scan{" "}
+          <Box component="span" sx={{ fontStyle: "italic", color: "var(--accent)" }}>History</Box>
+        </Typography>
+      </Box>
 
-      <Typography
-        variant="h4"
-        sx={{
-          mb: 5,
-          fontSize: {
-            xs: "2rem",
-            sm: "2.4rem",
-            md: "3rem"
-          }
-        }}
-      >
-        Your Scan History
-      </Typography>
-
-
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-          justifyContent: "flex-start",
-          gap: 1
-        }}
-      >
-
-        {history.map((item) => (
-
-          <Paper
+      {/* Grid */}
+      <Box sx={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
+        gap: 2
+      }}>
+        {history.map((item, index) => (
+          <Box
             key={item.barcode}
-            elevation={0}
             onClick={() => navigate(`/product/${item.barcode}`)}
             sx={{
-              p: 3,
-              borderRadius: 2,
-              border: "1px solid #686868",
+              background: "var(--bg-card)",
+              border: "1px solid var(--border-default)",
+              borderRadius: "var(--radius-lg)",
+              p: 2,
               cursor: "pointer",
               position: "relative",
-              transition: "0.25s",
-              background: "#212121",
-              width: 150,
+              transition: "all 0.25s var(--ease-out)",
+              display: "flex", flexDirection: "column",
+              minHeight: 220,
+              animation: `fadeUp 0.3s ${index * 0.04}s var(--ease-out) both`,
               "&:hover": {
-                transform: "translateY(-4px)",
-                borderColor: "#cbd5f5"
+                transform: "translateY(-6px)",
+                borderColor: "rgba(74,222,128,0.25)",
+                boxShadow: "0 16px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(74,222,128,0.08)"
               }
             }}
           >
-
-            {/* SCORE BADGE */}
-
-            <Box
-              sx={{
-                position: "absolute",
-                top: 12,
-                right: 12,
-                background: getScoreColor(item.score),
-                color: "#fff",
-                px: 1.5,
-                py: 0.5,
-                borderRadius: 1,
-                fontSize: "0.8rem",
-                fontWeight: 600
-              }}
-            >
-              {item.score}
+            {/* Score badge */}
+            <Box sx={{
+              position: "absolute", top: 10, right: 10,
+              width: 28, height: 28, borderRadius: "var(--radius-sm)",
+              background: getScoreBgColor(item.score),
+              border: `1px solid ${getScoreColor(item.score)}40`,
+              display: "flex", alignItems: "center", justifyContent: "center"
+            }}>
+              <Typography sx={{
+                fontFamily: "var(--font-mono)", fontWeight: 500,
+                fontSize: "0.7rem", color: getScoreColor(item.score), lineHeight: 1
+              }}>
+                {item.score}
+              </Typography>
             </Box>
 
-
-            {/* IMAGE FRAME */}
-
-            <Box
-              sx={{
-                width: 100,
-                height: 100,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "#1a1a1a",
-                borderRadius: 1,
-                mb: 2,
-                overflow: "hidden"
-              }}
-            >
+            {/* Image */}
+            <Box sx={{
+              width: "100%", aspectRatio: "1/1",
+              background: "var(--bg-elevated)", borderRadius: "var(--radius-md)",
+              mb: 2, overflow: "hidden",
+              display: "flex", alignItems: "center", justifyContent: "center"
+            }}>
               <Box
                 component="img"
                 src={item.image}
                 alt={item.product_name}
-                sx={{
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                  objectFit: "contain"
-                }}
+                sx={{ maxWidth: "80%", maxHeight: "80%", objectFit: "contain" }}
               />
             </Box>
 
-
-            {/* PRODUCT NAME */}
-
-            <Typography
-              sx={{
-                fontWeight: 100,
-                mb: 0.5,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                lineHeight: 1.4,
-                minHeight: "2em",
-                fontSize: "1rem"
-              }}
-            >
+            {/* Name */}
+            <Typography sx={{
+              fontWeight: 500, fontSize: "0.85rem",
+              color: "var(--text-primary)", mb: 0.5, flexGrow: 1,
+              fontFamily: "var(--font-body)",
+              overflow: "hidden", textOverflow: "ellipsis",
+              display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical",
+              lineHeight: 1.4
+            }}>
               {item.product_name}
             </Typography>
 
-
-            {/* BRAND */}
-
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{
-                fontSize: "0.9rem"
-              }}
-            >
+            {/* Brand */}
+            <Typography sx={{
+              fontFamily: "var(--font-mono)", fontSize: "0.68rem",
+              color: "var(--text-tertiary)", letterSpacing: "0.04em", mt: "auto"
+            }}>
               {item.brand || "Unknown Brand"}
             </Typography>
-
-          </Paper>
-
+          </Box>
         ))}
-
       </Box>
-
     </Container>
-
   );
-
 }
 
 export default History;
