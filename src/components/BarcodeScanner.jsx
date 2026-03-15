@@ -6,6 +6,7 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
   const videoRef = useRef(null);
   const readerRef = useRef(null);
   const streamRef = useRef(null);
+  const scannedRef = useRef(false);
 
   useEffect(() => {
 
@@ -58,14 +59,15 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
 
         reader.decodeFromVideoElement(video, (result) => {
 
-          if (result) {
+          if (result && !scannedRef.current) {
+
+            scannedRef.current = true;
 
             const code = result.getText();
 
             stopCamera();
 
             onScanSuccess(code);
-
           }
 
         });
