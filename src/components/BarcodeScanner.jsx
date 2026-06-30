@@ -49,6 +49,9 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
           audio: false
         });
 
+        const track = stream.getVideoTracks()[0];
+        console.log(track.getSettings());
+
         streamRef.current = stream;
 
         const video = videoRef.current;
