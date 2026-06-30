@@ -14,48 +14,91 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
 
       try {
 
-        // Step 1: request any rear camera first (to unlock device labels)
-        await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" }
-        });
 
-        // Step 2: list all cameras
-        const devices = await navigator.mediaDevices.enumerateDevices();
-
-        const videoDevices = devices.filter(
-          d => d.kind === "videoinput"
-        );
-
-        // Step 3: keep only rear cameras
-        const rearCameras = videoDevices.filter(device =>
-          device.label.toLowerCase().includes("back") ||
-          device.label.toLowerCase().includes("rear") ||
-          device.label.toLowerCase().includes("environment")
-        );
-
-        let selectedDeviceId;
-
-        if (rearCameras.length > 0) {
-          // choose the last rear camera (usually main lens)
-          selectedDeviceId = rearCameras[rearCameras.length - 1].deviceId;
-        } else {
-          selectedDeviceId = videoDevices[0]?.deviceId;
-        }
 
         const stream = await navigator.mediaDevices.getUserMedia({
           video: {
-            deviceId: { exact: selectedDeviceId }
+            facingMode: {
+              ideal: "environment"
+            },
+
+            width: {
+              ideal: 4096
+            },
+
+            height: {
+              ideal: 2160
+            },
+
+            frameRate: {
+              ideal: 30,
+              max: 60
+            }
           },
+
           audio: false
         });
 
         const track = stream.getVideoTracks()[0];
+
+        const capabilities = track.getCapabilities();
+
+        const advanced = [];
+
+        if (capabilities.focusMode) {
+          advanced.push({
+            focusMode: "continuous"
+          });
+        }
+
+        if (capabilities.exposureMode) {
+          advanced.push({
+            exposureMode: "continuous"
+          });
+        }
+
+        if (capabilities.whiteBalanceMode) {
+          advanced.push({
+            whiteBalanceMode: "continuous"
+          });
+        }
+
+        try {
+
+          if (advanced.length > 0) {
+
+            await track.applyConstraints({
+              advanced
+            });
+
+          }
+
+        }
+        catch (e) {
+
+          console.warn("Could not apply advanced constraints", e);
+
+        }
+
+        console.log("SETTINGS");
         console.log(track.getSettings());
+
+        console.log("CAPABILITIES");
+        console.log(capabilities);
+
+        console.log("CONSTRAINTS");
+        console.log(track.getConstraints());
 
         streamRef.current = stream;
 
         const video = videoRef.current;
         video.srcObject = stream;
+
+        await video.play();
+
+        await new Promise(resolve =>
+          setTimeout(resolve, 500)
+        );
 
         const reader = new BrowserMultiFormatReader();
         readerRef.current = reader;
