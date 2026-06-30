@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { BrowserMultiFormatReader } from "@zxing/browser";
+import { BarcodeFormat, DecodeHintType } from "@zxing/library";
 
 function BarcodeScanner({ onScanSuccess, closeScanner }) {
 
@@ -11,6 +12,8 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
   useEffect(() => {
 
     const startScanner = async () => {
+
+      scannedRef.current = false;
 
       try {
 
@@ -94,18 +97,43 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
         const video = videoRef.current;
         video.srcObject = stream;
 
-        await video.play();
+        await new Promise((resolve) => {
+          if (video.readyState >= 2) {
+            resolve();
+          } else {
+            video.onloadeddata = resolve;
+          }
+        });
 
-        await new Promise(resolve =>
-          setTimeout(resolve, 500)
+        await new Promise((resolve) => setTimeout(resolve, 300));
+
+        const hints = new Map();
+
+        hints.set(
+          DecodeHintType.POSSIBLE_FORMATS,
+          [
+            BarcodeFormat.EAN_13,
+            BarcodeFormat.EAN_8,
+            BarcodeFormat.UPC_A,
+            BarcodeFormat.UPC_E
+          ]
         );
 
-        const reader = new BrowserMultiFormatReader();
+        const reader = new BrowserMultiFormatReader(hints);
+
         readerRef.current = reader;
+
+        const scanStart = performance.now();
 
         reader.decodeFromVideoElement(video, (result) => {
 
           if (result && !scannedRef.current) {
+
+            console.log(
+              "Detected after",
+              (performance.now() - scanStart).toFixed(0),
+              "ms"
+            );
 
             scannedRef.current = true;
 
@@ -194,10 +222,11 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          width: "420px",
+          width: "100vw",
+          height: "100vh",
           background: "#000",
-          padding: "20px",
-          borderRadius: "10px"
+          position: "relative",
+          overflow: "hidden"
         }}
       >
 
@@ -208,17 +237,53 @@ function BarcodeScanner({ onScanSuccess, closeScanner }) {
           muted
           style={{
             width: "100%",
-            borderRadius: "8px"
+            height: "100%",
+            objectFit: "cover"
           }}
         />
+
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "80%",
+            aspectRatio: "3 / 1",
+            border: "3px solid #00ff88",
+            borderRadius: "12px",
+            pointerEvents: "none",
+            boxShadow: "0 0 0 9999px rgba(0,0,0,0.45)"
+          }}
+        />
+
+        <div
+          style={{
+            position: "absolute",
+            bottom: "90px",
+            width: "100%",
+            textAlign: "center",
+            color: "#fff",
+            fontSize: "16px",
+            fontWeight: 500,
+            zIndex: 10
+          }}
+        >
+          Align the barcode inside the frame
+        </div>
 
         <button
           onClick={shutdownScanner}
           style={{
-            marginTop: "10px",
-            width: "100%",
-            padding: "10px",
-            cursor: "pointer"
+            position: "absolute",
+            bottom: "30px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            padding: "12px 28px",
+            borderRadius: "10px",
+            border: "none",
+            cursor: "pointer",
+            zIndex: 10
           }}
         >
           Stop Scanning
