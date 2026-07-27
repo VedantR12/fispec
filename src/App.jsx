@@ -11,6 +11,8 @@ import Account from "./pages/Account";
 import Login from "./pages/Login";
 import Product from "./pages/Product";
 
+import { createPortal } from "react-dom";
+
 function Layout() {
 
   const location = useLocation();
@@ -72,11 +74,29 @@ const [showExitToast, setShowExitToast] = useState(false);
         <Route path="/account" element={<Account />} />
 
       </Routes>
-      {showExitToast && (
-  <div className="exit-toast">
-    Press back again to exit
-  </div>
-)}
+      {showExitToast &&
+  createPortal(
+    <div
+      style={{
+        position: "fixed",
+        left: "50%",
+        bottom: "24px",
+        transform: "translateX(-50%)",
+        zIndex: 2147483647,
+        background: "rgba(20,20,20,0.92)",
+        color: "#fff",
+        padding: "12px",
+        borderRadius: "999px",
+        fontWeight: 500,
+        fontSize: "12px",
+        boxShadow: "0 10px 30px rgba(0,0,0,.35)",
+        pointerEvents: "none",
+      }}
+    >
+      Press back again to exit
+    </div>,
+    document.body
+  )}
     </>
 
   );
