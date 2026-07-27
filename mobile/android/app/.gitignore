@@ -1,2 +1,5 @@
 /build/*
 !/build/.npmkeep
+
+mobile/android/key.properties
+mobile/android/app/spendly-release.keystore
