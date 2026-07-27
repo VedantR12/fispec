@@ -40,13 +40,20 @@ function Product() {
           token
         );
 
+
         setData(result);
 
       } catch (err) {
+    console.error("Product fetch error:", err);
 
-        setError(err.message);
+    alert(
+        "Fetch Error:\n" +
+        (err?.message || JSON.stringify(err))
+    );
 
-      } finally {
+    setError(err.message || "Unknown error");
+
+} finally {
 
         setLoading(false);
 

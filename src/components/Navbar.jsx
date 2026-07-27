@@ -1,3 +1,4 @@
+import { shouldUseNativeScanner, scanNativeBarcode, } from "../services/scanner";
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -26,6 +27,8 @@ function Navbar() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
+  const [nativeScannerBusy, setNativeScannerBusy] = useState(false);
+
   const name =
     user?.displayName ||
     user?.email?.split("@")[0] ||
@@ -33,7 +36,7 @@ function Navbar() {
 
   const initial = name.charAt(0).toUpperCase();
 
-  
+
   useEffect(() => {
 
     // close search UI when navigating
@@ -56,15 +59,52 @@ function Navbar() {
   };
 
 
-  
+
   const handleScanSuccess = (barcode) => {
 
-    setScannerOpen(false);
+  setScannerOpen(false);
 
-    navigate(`/product/${barcode}`, { replace: false });
+  navigate(`/product/${barcode}`, { replace: false });
+};
 
-  };
+  const openScanner = async () => {
 
+  if (nativeScannerBusy) {
+    return;
+  }
+
+  setSearchOpen(false);
+  setQuery("");
+  setSuggestions([]);
+
+  if (shouldUseNativeScanner()) {
+
+    setNativeScannerBusy(true);
+
+    try {
+
+      const barcode = await scanNativeBarcode();
+
+      if (barcode) {
+        handleScanSuccess(barcode);
+      }
+
+    } catch (err) {
+
+      console.error(err);
+
+    } finally {
+
+      setNativeScannerBusy(false);
+
+    }
+
+    return;
+  }
+
+  setScannerOpen(true);
+
+};
 
   const fetchSuggestions = async (value) => {
 
@@ -99,7 +139,7 @@ function Navbar() {
   };
 
 
-  
+
   useEffect(() => {
 
     const handleClickOutside = (event) => {
@@ -109,7 +149,7 @@ function Navbar() {
         return;
       }
 
-      
+
       if (scannerOpen) {
         return;
       }
@@ -131,17 +171,16 @@ function Navbar() {
   }, [scannerOpen]);
 
   useEffect(() => {
-  const handleOpenScanner = () => {
-    setSearchOpen(false);
-    setScannerOpen(true);
-  };
+    const handleOpenScanner = async () => {
+  await openScanner();
+};
 
-  window.addEventListener("fispec:open-scanner", handleOpenScanner);
+    window.addEventListener("fispec:open-scanner", handleOpenScanner);
 
-  return () => {
-    window.removeEventListener("fispec:open-scanner", handleOpenScanner);
-  };
-}, []);
+    return () => {
+      window.removeEventListener("fispec:open-scanner", handleOpenScanner);
+    };
+  }, []);
 
   return (
 
@@ -196,7 +235,7 @@ function Navbar() {
 
 
           <Box
-              onClick={() => navigate("/")}
+            onClick={() => navigate("/")}
             sx={{
               cursor: "pointer",
               userSelect: "none",
@@ -268,14 +307,14 @@ function Navbar() {
 
             <IconButton
               id="navbar-scan-button"
-              onClick={(e) => {
+              onClick={async (e) => {
 
-                e.stopPropagation();
+    e.stopPropagation();
 
-                setSearchOpen(false);
-                setScannerOpen((prev) => !prev);
+    await openScanner();
 
-              }}
+}}
+
               sx={{
                 width: 36,
                 height: 36,

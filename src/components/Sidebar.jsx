@@ -6,6 +6,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Typography, IconButton } from "@mui/material";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 
 function Sidebar({ close }) {
   const { user, logout } = useAuth();
@@ -15,11 +16,51 @@ function Sidebar({ close }) {
   const initial = name.charAt(0).toUpperCase();
 
   const navLinks = [
-    { icon: <HistoryIcon sx={{ fontSize: 18 }} />, label: "History",  action: () => { navigate("/history"); close(); } },
-    { icon: <GroupsIcon  sx={{ fontSize: 18 }} />, label: "Team",     action: () => { document.getElementById("team")?.scrollIntoView({ behavior: "smooth" }); close(); } },
-    { icon: <InfoOutlinedIcon sx={{ fontSize: 18 }} />, label: "About", action: () => { document.getElementById("about")?.scrollIntoView({ behavior: "smooth" }); close(); } },
-    { icon: <MailOutlineIcon  sx={{ fontSize: 18 }} />, label: "Contact", action: () => { document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }); close(); } }
-  ];
+  {
+    icon: <HomeOutlinedIcon sx={{ fontSize: 18 }} />,
+    label: "Home",
+    action: () => {
+      navigate("/");
+      close();
+    }
+  },
+
+  {
+    icon: <HistoryIcon sx={{ fontSize: 18 }} />,
+    label: "History",
+    action: () => {
+      navigate("/history");
+      close();
+    }
+  },
+
+  {
+    icon: <GroupsIcon sx={{ fontSize: 18 }} />,
+    label: "Team",
+    action: () => {
+      navigate("/#team");
+      close();
+    }
+  },
+
+  {
+    icon: <InfoOutlinedIcon sx={{ fontSize: 18 }} />,
+    label: "About",
+    action: () => {
+      navigate("/#about");
+      close();
+    }
+  },
+
+  {
+    icon: <MailOutlineIcon sx={{ fontSize: 18 }} />,
+    label: "Contact",
+    action: () => {
+      navigate("/#contact");
+      close();
+    }
+  }
+];
 
   return (
     <>
