@@ -7,7 +7,7 @@ client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 def run_groq(prompt: str) -> str:
 
     response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
+        model="qwen/qwen3.8-27b",
         temperature=0,
         messages=[
             {

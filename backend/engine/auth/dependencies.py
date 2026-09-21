@@ -7,6 +7,7 @@ initialize_firebase()
 
 security = HTTPBearer()
 
+
 def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
@@ -15,6 +16,7 @@ def get_current_user(
     try:
         decoded_token = auth.verify_id_token(token)
         return decoded_token
+
     except Exception as e:
         print("Firebase token verification failed:", repr(e))
         raise HTTPException(
