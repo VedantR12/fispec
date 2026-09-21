@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">fispec</string>
+    <string name="title_activity_main">fispec</string>
+    <string name="package_name">com.vedant.fispec</string>
+    <string name="custom_url_scheme">com.vedant.fispec</string>
+</resources>

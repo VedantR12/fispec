@@ -1,0 +1,61 @@
+Folder PATH listing for volume ACER
+Volume serial number is 9467-634A
+C:.
+|   .env
+|   .gitignore
+|   eslint.config.js
+|   index.html
+|   list.txt
+|   package-lock.json
+|   package.json
+|   README.md
+|   structure.txt
+|   vite.config.js
+|                
++---public
+|       vite.svg
+|       
+\---src
+    |   App.css
+    |   App.jsx
+    |   firebase.js
+    |   index.css
+    |   main.jsx
+    |   theme.js
+    |   
+    +---api
+    |       client.js
+    |       
+    +---assets
+    |   |   cofounder.jpg
+    |   |   react.svg
+    |   |   vedant.jpg
+    |   |   
+    |   \---videos
+    |           hero-scan.mp4
+    |           
+    +---components
+    |       BarcodeScanner.jsx
+    |       Navbar.jsx
+    |       Sidebar.jsx
+    |       
+    +---context
+    |       AuthContext.jsx
+    |       
+    +---pages
+    |       Account.jsx
+    |       History.jsx
+    |       Home.jsx
+    |       Login.jsx
+    |       Product.jsx
+    |       SearchResults.jsx
+    |       
+    \---sections
+            About.jsx
+            Contact.jsx
+            Faq.jsx
+            Footer.jsx
+            Hero.jsx
+            index.css
+            Team.jsx
+            

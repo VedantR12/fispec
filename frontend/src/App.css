@@ -1,0 +1,7 @@
+/* App.css — minimal, all real styles live in index.css */
+#root {
+  max-width: unset;
+  margin: 0;
+  padding: 0;
+  text-align: unset;
+}

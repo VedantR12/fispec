@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ─── DESIGN TOKENS ─── */
+:root {
+  --bg-base:        #0a0c0b;
+  --bg-surface:     #111410;
+  --bg-elevated:    #181c16;
+  --bg-card:        #1c2119;
+  --bg-hover:       #222820;
+  --border-subtle:  rgba(255,255,255,0.06);
+  --border-default: rgba(255,255,255,0.10);
+  --border-strong:  rgba(255,255,255,0.18);
+  --accent:         #4ade80;
+  --accent-dim:     rgba(74,222,128,0.12);
+  --accent-glow:    rgba(74,222,128,0.25);
+  --accent-dark:    #22c55e;
+  --amber:          #fbbf24;
+  --amber-dim:      rgba(251,191,36,0.12);
+  --score-good:     #4ade80;
+  --score-mid:      #fbbf24;
+  --score-bad:      #f87171;
+  --text-primary:   #f0f4ee;
+  --text-secondary: #7d9070;
+  --text-tertiary:  #4a5e42;
+  --text-inverse:   #0a0c0b;
+  --font-display:   'DM Serif Display', Georgia, serif;
+  --font-body:      'DM Sans', system-ui, sans-serif;
+  --font-mono:      'JetBrains Mono', monospace;
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-pill: 999px;
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md:   0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg:   0 16px 48px rgba(0,0,0,0.6);
+  --shadow-glow: 0 0 24px rgba(74,222,128,0.15);
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background-color: var(--bg-base);
+  min-height: 100vh;
+  line-height: 1.6;
+  display: block !important;
+  place-items: unset !important;
+}
+
+#root { min-height: 100vh; display: flex; flex-direction: column; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+p { color: var(--text-secondary); line-height: 1.7; }
+a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--accent-dark); }
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ─── SKELETON ─── */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-hover) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── MUI OVERRIDES ─── */
+.MuiOutlinedInput-root {
+  background: var(--bg-elevated) !important;
+  border-radius: var(--radius-md) !important;
+  font-family: var(--font-body) !important;
+}
+.MuiOutlinedInput-notchedOutline { border-color: var(--border-default) !important; }
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline { border-color: var(--border-strong) !important; }
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { border-color: var(--accent) !important; border-width: 1.5px !important; }
+.MuiInputLabel-root { color: var(--text-secondary) !important; font-family: var(--font-body) !important; }
+.MuiInputLabel-root.Mui-focused { color: var(--accent) !important; }
+.MuiInputBase-input { color: var(--text-primary) !important; font-family: var(--font-body) !important; }
+.MuiCircularProgress-root { color: var(--accent) !important; }
+.MuiChip-root { font-family: var(--font-body) !important; border-radius: 99px !important; }
+
+/* App.css overrides — reset vite defaults */
+#root { max-width: unset; padding: 0; text-align: unset; }
+
+
+
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
