@@ -10,7 +10,7 @@ Scan a product barcode or search for a food → identify the product → analyze
 
 ---
 
-## ✨ What is FiSpec?
+## What is FiSpec?
 
 Food labels contain a lot of information, but most of it isn't presented in a way that's easy to understand.
 
@@ -92,7 +92,7 @@ Users can authenticate and maintain their analysis history, allowing previously 
 
 ---
 
-# 🏗️ Architecture
+# Architecture
 
 ### High-level system
 
@@ -241,7 +241,7 @@ The application is deployed as a real web application with separate frontend and
 
 ---
 
-# ⚙️ Running Locally
+# Running Locally
 
 ## Clone
 
@@ -348,6 +348,6 @@ AI & Full-Stack Developer focused on building practical software, AI systems, an
 
 ---
 
-## ⭐ If you find FiSpec interesting
+## If you find FiSpec interesting
 
 Star the repository and check out the project.
