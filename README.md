@@ -215,31 +215,29 @@ into a single application.
 
 FiSpec was built as a full-stack system rather than a standalone AI demo.
 
-### Full-stack architecture
+### 1. Full-stack architecture
 
 The application separates the user-facing interface from the backend analysis layer.
 
-### API-driven design
+### 2. API-driven design
 
 The frontend communicates with a dedicated FastAPI backend rather than embedding the analysis logic directly into the UI.
 
-### AI integration
+### 3. AI integration
 
 AI is used as an interpretation layer on top of structured food information.
 
-### External data integration
+### 4. External data integration
 
 FiSpec integrates external food-product data instead of relying exclusively on manually created datasets.
 
-### Authentication
+### 5. Authentication
 
 User authentication enables personalized product-analysis history.
 
-### Production deployment
+### 6. Production deployment
 
 The application is deployed as a real web application with separate frontend and backend infrastructure.
-
----
 
 ---
 
