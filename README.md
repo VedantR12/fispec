@@ -58,35 +58,35 @@ FiSpec processes the available product data and presents it as a concise, unders
 
 ## Features
 
-### Barcode-based product lookup
+### 1. Barcode-based product lookup
 
 Scan a packaged food product and use its barcode to identify it.
 
-### Unified search
+### 2. Unified search
 
 Don't have the barcode?
 
 Search for the product by name instead.
 
-### Ingredient analysis
+### 3. Ingredient analysis
 
 FiSpec processes the ingredient information available for a product and turns the raw label into structured information.
 
-### Nutritional analysis
+### 4. Nutritional analysis
 
 View nutritional information in a cleaner and more understandable format.
 
-### AI-powered explanations
+### 5. AI-powered explanations
 
 Instead of simply displaying raw food-label data, FiSpec uses an AI layer to explain the information in natural language.
 
-### Food intelligence
+### 6. Food intelligence
 
 The goal isn't just to display what's written on the package.
 
 FiSpec adds an interpretation layer that helps users understand **what they're actually looking at**.
 
-### Authentication & history
+### 7. Authentication & history
 
 Users can authenticate and maintain their analysis history, allowing previously analyzed products to remain accessible.
 
